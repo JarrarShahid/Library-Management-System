@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block body %}
+
+        <h2 class="lib-heading">Member Search</h2>
+
+        <div class="lib-filters">
+            <input type="text" id="memberSearchInput" placeholder="Search by Member ID or Name..." class="lib-search-input">
+        </div>
+
+        <table class="lib-table">
+            <thead>
+                <tr>
+                    <th>Member ID</th>
+                    <th>Name</th>
+                    <th>Age</th>
+                    <th>Contact</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+            <tbody id="memberResults">
+                <!-- Members will be dynamically rendered here -->
+            </tbody>
+        </table>
+
+  
+{% endblock body %}

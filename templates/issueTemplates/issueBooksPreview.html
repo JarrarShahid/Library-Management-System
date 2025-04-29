@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+        <h2 class="lib-heading">Issued Books</h2>
+
+        <div class="lib-filters">
+            <input type="text" id="issueSearchInput" placeholder="Search by Issue ID..." class="lib-search-input">
+        </div>
+
+        <table class="lib-table">
+            <thead>
+                <tr>
+                    <th>Issue Book ID</th>
+                    <th>Member ID</th>
+                    <th>Book ID</th>
+                    <th>Expected Return</th>
+                    <th>Issued On</th>
+                    <th>Status</th>
+                    <th>Return Date</th>
+                </tr>
+            </thead>
+            <tbody id="issueResults">
+                <!-- Issue records will be rendered here -->
+            </tbody>
+        </table>
+
+
+
+{% endblock body %}

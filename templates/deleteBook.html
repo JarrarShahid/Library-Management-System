@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block body %}
+<h2 class="lib-heading">Delete Book</h2>
+
+<form method="POST" id="updateForm">
+    {% csrf_token %}
+    
+    <div class="form-group">
+        <label for="bookID">Book ID:</label>
+        <input type="text" id="bookID" name="bookID" required>
+        <button type="button" class="btn-find custom-add-Category-or-find-button" onclick="findBook()">Find Book</button>
+    </div>
+    
+
+    <div class="form-group">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" value="{{title}}" disabled>
+    </div>
+    <!-- Error Message: --> 
+    <div style="height: 7px;"> 
+        {% if error %} 
+            <div class="m-0 ps-2 error_message" role="alert"> 
+                {{title_error}} 
+            </div> 
+        {% endif %} 
+    </div> 
+
+    <div class="form-group">
+        <label for="author">Author:</label>
+        <input type="text" id="author" name="author" value="{{author}}" disabled>
+    </div>
+    <!-- Error Message: --> 
+    <div style="height: 7px;"> 
+        {% if error %} 
+            <div class="m-0 ps-2 error_message" role="alert"> 
+                {{author_error}} 
+            </div> 
+        {% endif %} 
+    </div> 
+
+    <!-- Category Dropdown -->
+    <label for="category">Category:</label>
+    {% comment %} <select id="category" disabled>
+        <option value="">-- Select Category --</option>
+        <option value="Fiction">Fiction</option>
+        <option value="Non-Fiction">Non-Fiction</option>
+        <option value="Science">Science</option>
+        <option value="History">History</option>
+        <option value="Biography">Biography</option>
+        <option value="Fantasy">Fantasy</option>
+        <option value="Mystery">Mystery</option>
+        <option value="Self-Help">Self-Help</option>
+    </select>
+    <button type="button" onclick="addCategory()" disabled>Add Category</button> {% endcomment %}
+
+    <!-- Display Selected Categories -->
+    <div id="selected-categories"></div>
+    <input type="hidden" name="categories" id="categories" value="{{ categories | safe }}" disabled>
+    
+
+    <div class="form-group">
+        <label for="totalQTY">Total Quantity:</label>
+        <input type="number" id="totalQTY" name="totalQTY" value="{{totalQTY}}" disabled>
+    </div>
+    <!-- Error Message: --> 
+    <div style="height: 7px;"> 
+        {% if error %} 
+            <div class="m-0 ps-2 error_message" role="alert"> 
+                {{totalQTY_error}} 
+            </div> 
+        {% endif %} 
+    </div> 
+
+    <div class="form-group">
+        <label for="ageLimit">Age Limit:</label>
+        <input type="number" id="ageLimit" name="ageLimit" value="{{ageLimit}}" disabled>
+    </div>
+    <!-- Error Message: --> 
+    <div style="height: 7px;"> 
+        {% if error %} 
+            <div class="m-0 ps-2 error_message" role="alert"> 
+                {{ageLimit_error}} 
+            </div> 
+        {% endif %} 
+    </div> 
+
+    <div class="form-group">
+        <label for="releaseDate">Release Date:</label>
+        <input type="date" id="releaseDate" name="releaseDate" value="{{releaseDate}}" disabled>
+    </div>
+
+    <button type="submit" class="submit-btn">Delete Book</button>
+</form>
+{% endblock body %}

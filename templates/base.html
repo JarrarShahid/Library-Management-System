@@ -1,0 +1,572 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    {% comment %} bootstrap cdn {% endcomment %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- external css file -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <style>
+        {% block InpageStyling %}
+        {% endblock InpageStyling %}
+    </style>
+    
+
+</head>
+<body>
+    <div class="top-messages-container">
+        {% if messages %}
+            <div class="alert-container">
+                {% for message in messages %}
+                    <div class="alert {% if message.tags == 'error' %}alert-danger{% else %}alert-{{ message.tags }}{% endif %}" role="alert">
+                        {% if message.tags == 'success' %}
+                            <i class="fas fa-check-circle"></i> <strong>Success:</strong> {{ message }}
+                        {% elif message.tags == 'error' %}
+                            <i class="fas fa-exclamation-triangle"></i> <strong>Error:</strong> {{ message }}
+                        {% elif message.tags == 'warning' %}
+                            <i class="fas fa-exclamation-circle"></i> <strong>Warning:</strong> {{ message }}
+                        {% elif message.tags == 'info' %}
+                            <i class="fas fa-info-circle"></i> <strong>Info:</strong> {{ message }}
+                        {% else %}
+                            {{ message }}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+      </div>
+      <div class="navbar">
+        <div class="navbar-title">Library Management System</div>
+        <div class="navbar-actions">
+            <button id="darkModeToggle" class="dark-mode-btn" onclick="toggleDarkMode()">🌙</button>
+            <a href="{% url 'logout' %}" class="logout-btn">Logout</a>
+        </div>
+    </div>
+    
+    
+    <div class="lib-container">
+        
+        <aside class="lib-sidebar">
+            <nav class="sidebar-section">
+                <h3 class="sidebar-heading issue-books">Issue Books</h3>
+                <ul>
+                    <li><a href="{% url 'issueBooksPreview' %}" class="{% if request.resolver_match.url_name == 'issueBooksPreview' %}active{% endif %}"><span class="sidebar-icon book-icon"></span> Issue Books Preview</a></li>
+                    <li><a href="{% url 'issueBook' %}" class="{% if request.resolver_match.url_name == 'issueBook' %}active{% endif %}"><span class="sidebar-icon book-icon1"></span> Issue a Book</a></li>
+                    <li><a href="{% url 'returnBook' %}" class="{% if request.resolver_match.url_name == 'returnBook' %}active{% endif %}"><span class="sidebar-icon book-icon2"></span> Return a Book</a></li>
+                </ul>
+            </nav>
+        
+            <nav class="sidebar-section">
+                <h3 class="sidebar-heading books">Books</h3>
+                <ul>
+                    <li><a href="{% url 'booksPreview' %}" class="{% if request.resolver_match.url_name == 'booksPreview' %}active{% endif %}"><span class="sidebar-icon book-icon"></span> Books Preview</a></li>
+                    <li><a href="{% url 'addBooks' %}" class="{% if request.resolver_match.url_name == 'addBooks' %}active{% endif %}"><span class="sidebar-icon plus-icon"></span> Add Book</a></li>
+                    <li><a href="{% url 'updateBook' %}" class="{% if request.resolver_match.url_name == 'updateBook' %}active{% endif %}"><span class="sidebar-icon pen-icon"></span> Update Book</a></li>
+                    <li><a href="{% url 'deleteBook' %}" class="{% if request.resolver_match.url_name == 'deleteBook' %}active{% endif %}"><span class="sidebar-icon bin-icon"></span> Delete Book</a></li>
+                </ul>
+            </nav>
+        
+            <nav class="sidebar-section">
+                <h3 class="sidebar-heading members">Members</h3>
+                <ul>
+                    <li><a href="{% url 'members_preview' %}" class="{% if request.resolver_match.url_name == 'members_preview' %}active{% endif %}"><span class="sidebar-icon avatar-icon"></span> Members Preview</a></li>
+                    <li><a href="{% url 'addMember' %}" class="{% if request.resolver_match.url_name == 'addMember' %}active{% endif %}"><span class="sidebar-icon plus-icon"></span> Add Member</a></li>
+                    <li><a href="{% url 'updateMember' %}" class="{% if request.resolver_match.url_name == 'updateMember' %}active{% endif %}"><span class="sidebar-icon pen-icon"></span> Update Member</a></li>
+                    <li><a href="{% url 'deleteMember' %}" class="{% if request.resolver_match.url_name == 'deleteMember' %}active{% endif %}"><span class="sidebar-icon bin-icon"></span> Delete Member</a></li>
+                </ul>
+            </nav>
+        </aside>
+        
+        
+        <main class="lib-main">
+            
+            {% block body %}
+            {% endblock body %}
+        </div> 
+    </div>
+    
+    
+
+
+    <!-- external Js file -->
+    <script src="{% static 'js/script.js' %}"></script>
+
+    <!-- for Dissapearing Django messages -->
+    <script>
+        // Wait for the DOM to fully load
+        document.addEventListener("DOMContentLoaded", function () {
+            const alertContainer = document.querySelector(".alert-container");
+            if (alertContainer) {
+                setTimeout(() => {
+                    alertContainer.style.display = "none";
+                }, 4000); // 4000 milliseconds = 4 seconds
+            }
+        });
+    </script>
+
+    <script>
+        const selectedCategories = new Set();
+
+        function addCategory() {
+            const categorySelect = document.getElementById("category");
+            const selectedValue = categorySelect.value;
+
+            if (selectedValue && !selectedCategories.has(selectedValue)) {
+                selectedCategories.add(selectedValue);
+
+                const displayDiv = document.getElementById("selected-categories");
+                const span = document.createElement("span");
+                span.className = "category-item";
+                span.innerText = selectedValue;
+                displayDiv.appendChild(span);
+
+                // Update hidden input
+                document.getElementById("categories").value = Array.from(selectedCategories).join(",");
+            }
+
+            categorySelect.value = ""; // reset dropdown
+        }
+        const initialCategories = JSON.parse('{{ categories|escapejs }}');
+
+        document.addEventListener("DOMContentLoaded", () => {
+            if (Array.isArray(initialCategories)) {
+                const displayDiv = document.getElementById("selected-categories");
+
+                initialCategories.forEach(category => {
+                    if (!selectedCategories.has(category)) {
+                        selectedCategories.add(category);
+
+                        const span = document.createElement("span");
+                        span.className = "category-item";
+                        span.innerText = category;
+                        displayDiv.appendChild(span);
+                    }
+                });
+
+                document.getElementById("categories").value = Array.from(selectedCategories).join(",");
+            }
+        });
+    </script>
+    
+    <script>
+        // For Dynamically filling the update book form with details corresponds to Enteerd ID
+        function findBook() {
+            const bookID = document.getElementById('bookID').value;
+        
+            if (!bookID) {
+                alert("Please enter a Book ID.");
+                return;
+            }
+        
+            fetch(`/get-book/${bookID}/`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Book not found");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (document.getElementById('title')) {
+                        document.getElementById('title').value = data.title || '';
+                    }
+                    if (document.getElementById('author')) {
+                        document.getElementById('author').value = data.author || '';
+                    }
+                    if (document.getElementById('totalQTY')) {
+                        document.getElementById('totalQTY').value = data.totalQTY || '';
+                    }
+                    if (document.getElementById('ageLimit')) {
+                        document.getElementById('ageLimit').value = data.ageLimit || '';
+                    }
+                    if (document.getElementById('releaseDate')) {
+                        document.getElementById('releaseDate').value = data.releaseDate || '';
+                    }
+        
+                    let categories = data.category;
+        
+                    // Normalize categories to array
+                    if (typeof categories === 'string') {
+                        try {
+                            categories = JSON.parse(categories);
+                        } catch (e) {
+                            categories = [categories];
+                        }
+                    }
+                    if (!Array.isArray(categories)) {
+                        categories = [];
+                    }
+        
+                    // Clear old categories
+                    selectedCategories.clear();
+                    const displayDiv = document.getElementById("selected-categories");
+                    if (displayDiv) {
+                        displayDiv.innerHTML = '';
+            
+                        // Add new categories from fetched data
+                        categories.forEach(category => {
+                            if (!selectedCategories.has(category)) {
+                                selectedCategories.add(category);
+            
+                                const span = document.createElement("span");
+                                span.className = "category-item";
+                                span.innerText = category;
+                                displayDiv.appendChild(span);
+                            }
+                        });
+                    }
+        
+                    // Update hidden input
+                    document.getElementById("categories").value = Array.from(selectedCategories).join(",");
+                })
+                .catch(error => {
+                    alert(error.message);
+                });
+        }
+        
+        document.addEventListener("DOMContentLoaded", () => {
+            if (Array.isArray(initialCategories)) {
+                const displayDiv = document.getElementById("selected-categories");
+
+                initialCategories.forEach(category => {
+                    if (!selectedCategories.has(category)) {
+                        selectedCategories.add(category);
+
+                        const span = document.createElement("span");
+                        span.className = "category-item";
+                        span.innerText = category;
+                        displayDiv.appendChild(span);
+                    }
+                });
+
+                document.getElementById("categories").value = Array.from(selectedCategories).join(",");
+            }
+        });
+    </script> 
+
+
+
+
+    <script>
+        
+        document.addEventListener("DOMContentLoaded", function () {
+            // Get the books data passed from Django context
+            const booksLoaded = JSON.parse('{{books|escapejs}}');
+
+            const searchInput = document.getElementById("searchInput");
+            const authorFilter = document.getElementById("authorFilter");
+            const categoryFilter = document.getElementById("categoryFilter");
+            const bookResults = document.getElementById("bookResults");
+
+            renderBooks(booksLoaded)
+        
+            // =============== COMMON RENDER FUNCTION ===============
+            function renderBooks(bookList) {
+                bookResults.innerHTML = "";
+        
+                if (bookList.length === 0) {
+                    bookResults.innerHTML = "<tr><td colspan='7'>No books found.</td></tr>";
+                    return;
+                }
+        
+                bookList.forEach(book => {
+                    const available = book.totalQTY - book.issuedQTY;
+                    const categories = book.Category.join(', ');
+                    const row = `
+                        <tr>
+                            <td>${book.BookID}</td>
+                            <td>${book.title}</td>
+                            <td>${book.author}</td>
+                            <td>${categories}</td>
+                            <td>${book.ageLimit}</td>
+                            <td>${book.releaseDate}</td>
+                            <td>${available}</td>
+                        </tr>`;
+                    bookResults.innerHTML += row;
+                });
+            }
+        
+            // =============== SEARCH BY TITLE OR BOOK ID ===============
+            searchInput.addEventListener("input", function () {
+                const searchQuery = searchInput.value;
+                if (searchQuery.trim() === "") {
+                    {% comment %} bookResults.innerHTML = "<tr><td colspan='7'>Please enter a search query.</td></tr>"; {% endcomment %}
+                    renderBooks(booksLoaded)
+                    return;
+                }
+        
+                fetch(`/search_books/?query=${encodeURIComponent(searchQuery)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        renderBooks(data.books);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching books:', error);
+                    });
+            });
+        
+            // =============== FILTER BY CATEGORY ===============
+            categoryFilter.addEventListener("change", function () {
+                const selectedCategory = categoryFilter.value;
+                fetch(`/filter_books_by_category/?category=${encodeURIComponent(selectedCategory)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        renderBooks(data.books);
+                    })
+                    .catch(error => {
+                        console.error('Error filtering by category:', error);
+                    });
+            });
+        
+            // =============== FILTER BY AUTHOR ===============
+            authorFilter.addEventListener("change", function () {
+                const selectedAuthor = authorFilter.value;
+                fetch(`/filter_books_by_author/?author=${encodeURIComponent(selectedAuthor)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        renderBooks(data.books);
+                    })
+                    .catch(error => {
+                        console.error('Error filtering by author:', error);
+                    });
+            });
+        });
+    </script>
+    
+
+    <script>
+        // For Dynamically updating Member Details on Runtime
+        function findMember() {
+            const memberID = document.getElementById('memberID').value;
+    
+            if (!memberID) {
+                alert("Please enter a Member ID.");
+                return;
+            }
+    
+            fetch(`/get-member/${memberID}/`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Member not found");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (document.getElementById('name')) {
+                        document.getElementById('name').value = data.name || '';
+                    }
+                    if (document.getElementById('age')) {
+                        document.getElementById('age').value = data.age || '';
+                    }
+                    if (document.getElementById('contact')) {
+                        document.getElementById('contact').value = data.contact || '';
+                    }
+                    if (document.getElementById('address')) {
+                        document.getElementById('address').value = data.Address || '';
+                    }
+                })
+                .catch(error => {
+                    alert(error.message);
+                });
+        }
+    </script>
+
+    <script>
+        // For sending Member search request to Backend
+        document.addEventListener("DOMContentLoaded", function () {
+            const membersLoaded = JSON.parse('{{ members|escapejs }}');
+            const searchInput = document.getElementById("memberSearchInput");
+            const memberResults = document.getElementById("memberResults");
+        
+            renderMembers(membersLoaded);
+        
+            function renderMembers(memberList) {
+                memberResults.innerHTML = "";
+        
+                if (memberList.length === 0) {
+                    memberResults.innerHTML = "<tr><td colspan='5'>No members found.</td></tr>";
+                    return;
+                }
+        
+                memberList.forEach(member => {
+                    const row = `
+                        <tr>
+                            <td>${member.MemberID}</td>
+                            <td>${member.name}</td>
+                            <td>${member.age}</td>
+                            <td>${member.contact}</td>
+                            <td>${member.Address}</td>
+                        </tr>`;
+                    memberResults.innerHTML += row;
+                });
+            }
+        
+            searchInput.addEventListener("input", function () {
+                const query = searchInput.value.trim();
+        
+                fetch(`/search_members/?query=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        renderMembers(data.members);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching members:', error);
+                    });
+            });
+        });
+    </script>
+
+    <script>
+        // for rendering issue invoice data Dynamically
+        function findIssueInvoice() {
+            const issueID = document.getElementById("issueID").value;
+
+            fetch(`/get-issue-book/${issueID}/`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error("Issue Book ID not found");
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Show the details section
+                    document.getElementById("invoice-details").style.display = "block";
+
+                    // Fill the disabled inputs with the returned data
+                    document.getElementById("display_issue_id").value = data.IssueBookID;
+                    document.getElementById("hidden_issue_id").value = data.IssueBookID;
+
+                    document.getElementById("display_member_id").value = data.memberID;
+                    document.getElementById("hidden_member_id").value = data.memberID;
+
+                    document.getElementById("display_book_id").value = data.bookID;
+                    document.getElementById("hidden_book_id").value = data.bookID;
+
+                    document.getElementById("display_expected_return").value = data.expectedReturn;
+                    document.getElementById("display_issued_on").value = data.issued_on;
+                    document.getElementById("display_status").value = data.status;
+                    document.getElementById("display_return_date").value = data.return_date || "Not Returned Yet";
+                })
+                .catch(error => {
+                    alert(error.message);
+                    document.getElementById("invoice-details").style.display = "none";
+                });
+        }
+    </script>
+
+    <script>
+        // Just for Validating that Member and book ID is in correct format
+        function validateForm(event) {
+            const memberID = document.getElementById("memberID").value.trim();
+            const bookID = document.getElementById("bookID").value.trim();
+
+            if (!memberID.startsWith("M")) {
+                alert("Member ID must start with 'M'");
+                event.preventDefault(); // stop the form from submitting
+                return false;
+            }
+
+            if (!bookID.startsWith("B")) {
+                alert("Book ID must start with 'B'");
+                event.preventDefault();
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const issueBooks = JSON.parse('{{ issued_books|escapejs }}');
+            const searchInput = document.getElementById("issueSearchInput");
+            const issueResults = document.getElementById("issueResults");
+
+            renderIssuedBooks(issueBooks)
+            
+    
+            // Separated render function
+            function renderIssuedBooks(list) {
+                issueResults.innerHTML = "";
+    
+                if (!list || list.length === 0) {
+                    issueResults.innerHTML = "<tr><td colspan='7'>No issued books found.</td></tr>";
+                    return;
+                }
+    
+                list.forEach(book => {
+                    const row = `
+                        <tr>
+                            <td>${book.IssueBookID}</td>
+                            <td>${book.memberID}</td>
+                            <td>${book.bookID}</td>
+                            <td>${book.expectedReturn}</td>
+                            <td>${book.issued_on}</td>
+                            <td>${book.status}</td>
+                            <td>${book.return_date}</td>
+                        </tr>`;
+                    issueResults.innerHTML += row;
+                });
+            }
+    
+            // Search input listener
+            searchInput.addEventListener("input", function () {
+                const query = searchInput.value.trim();
+                console.log(query)
+    
+                fetch(`/search_issued_books/?query=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        renderIssuedBooks(data.issued_books);
+                    })
+                    .catch(error => {
+                        console.error('Error fetching issued books:', error);
+                    });
+            });
+        });
+    </script>
+    
+    <script>
+        function toggleDarkMode() {
+            const body = document.body;
+            body.classList.toggle('dark-mode');
+        
+            // Update the icon
+            const toggleButton = document.getElementById('darkModeToggle');
+            if (body.classList.contains('dark-mode')) {
+                toggleButton.textContent = "🌞"; // Sun when dark mode active
+                localStorage.setItem('darkMode', 'enabled');
+            } else {
+                toggleButton.textContent = "🌙"; // Moon when light mode active
+                localStorage.setItem('darkMode', 'disabled');
+            }
+        }
+        
+        // When page loads, apply saved mode
+        document.addEventListener('DOMContentLoaded', () => {
+            const darkModeSetting = localStorage.getItem('darkMode');
+            const body = document.body;
+            const toggleButton = document.getElementById('darkModeToggle');
+        
+            if (darkModeSetting === 'enabled') {
+                body.classList.add('dark-mode');
+                toggleButton.textContent = "🌞";
+            } else {
+                body.classList.remove('dark-mode');
+                toggleButton.textContent = "🌙";
+            }
+        });
+        </script>
+        
+        
+    
+    
+</body>
+</html>

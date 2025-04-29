@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+
+{% block body %}
+<h2 class="lib-heading">Add New Member</h2>
+<form method="POST">
+    {% csrf_token %}
+    <!-- Name -->
+    <label for="name">Name:</label>
+    <input type="text" name="name" id="name" required value="{{name}}">
+    <!-- Error Message: --> 
+    <div style="height: 7px;"> 
+        {% if error %} 
+            <div class="m-0 ps-2 error_message" role="alert"> 
+                {{name_error}} 
+            </div> 
+        {% endif %} 
+    </div> 
+
+    <!-- Author -->
+    <label for="age">Age:</label>
+    <input type="text" name="age" id="age" required value="{{age}}">
+    <!-- Error Message: --> 
+    <div style="height: 7px;"> 
+        {% if error %} 
+            <div class="m-0 ps-2 error_message" role="alert"> 
+                {{age_error}} 
+            </div> 
+        {% endif %} 
+    </div> 
+
+
+    <!-- Age Limit -->
+    <label for="contact">Contact:</label>
+    <input type="text" name="contact" id="contact" required value="{{contact}}">
+    <!-- Error Message: --> 
+    <div style="height: 7px;"> 
+        {% if error %} 
+            <div class="m-0 ps-2 error_message" role="alert"> 
+                {{contact_error}} 
+            </div> 
+        {% endif %} 
+    </div> 
+
+    <!-- Release Date -->
+    <label for="Address">Address:</label>
+    <input type="text" name="Address" id="Address" required value="{{ Address}}">
+    <!-- Error Message: --> 
+    <div style="height: 7px;"> 
+        {% if error %} 
+            <div class="m-0 ps-2 error_message" role="alert"> 
+                {{Address_error}} 
+            </div> 
+        {% endif %} 
+    </div> 
+
+
+    <br><br>
+    <button type="submit">Submit</button>
+</form>
+{% endblock body %}

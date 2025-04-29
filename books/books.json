@@ -1,0 +1,231 @@
+[
+    {
+        "BookID": "B001",
+        "title": "The Lightning Thief",
+        "author": "Rick Riordan",
+        "Category": [
+            "Mystery",
+            "Fantasy",
+            "Adventure"
+        ],
+        "ageLimit": 10,
+        "releaseDate": "June 28, 2005",
+        "copies": 10,
+        "addedDate": "April 21, 2025",
+        "issuedQTY": 0,
+        "totalQTY": 10
+    },
+    {
+        "BookID": "B002",
+        "title": "Harry Potter and the Sorcerer's Stone",
+        "author": "J.K. Rowling",
+        "Category": [
+            "Fantasy",
+            "Adventure"
+        ],
+        "ageLimit": 8,
+        "releaseDate": "June 26, 1997",
+        "copies": 15,
+        "addedDate": "April 21, 2025",
+        "issuedQTY": 0,
+        "totalQTY": 15
+    },
+    {
+        "BookID": "B003",
+        "title": "To Kill a Mockingbird",
+        "author": "Harper Lee",
+        "Category": [
+            "Classic",
+            "Fiction",
+            "Drama"
+        ],
+        "ageLimit": 13,
+        "releaseDate": "July 11, 1960",
+        "copies": 8,
+        "addedDate": "April 21, 2025",
+        "issuedQTY": 0,
+        "totalQTY": 8
+    },
+    {
+        "BookID": "B004",
+        "title": "The Hobbit",
+        "author": "J.R.R. Tolkien",
+        "Category": [
+            "Fantasy",
+            "Adventure"
+        ],
+        "ageLimit": 10,
+        "releaseDate": "September 21, 1937",
+        "copies": 12,
+        "addedDate": "April 21, 2025",
+        "issuedQTY": 0,
+        "totalQTY": 12
+    },
+    {
+        "BookID": "B005",
+        "title": "1984",
+        "author": "George Orwell",
+        "Category": [
+            "Dystopian",
+            "Science Fiction"
+        ],
+        "ageLimit": 14,
+        "releaseDate": "June 8, 1949",
+        "copies": 7,
+        "addedDate": "April 21, 2025",
+        "issuedQTY": 0,
+        "totalQTY": 7
+    },
+    {
+        "BookID": "B006",
+        "title": "The Great Gatsby",
+        "author": "F. Scott Fitzgerald",
+        "Category": [
+            "Classic",
+            "Drama"
+        ],
+        "ageLimit": 14,
+        "releaseDate": "April 10, 1925",
+        "copies": 10,
+        "addedDate": "April 21, 2025",
+        "issuedQTY": 0,
+        "totalQTY": 10
+    },
+    {
+        "BookID": "B007",
+        "title": "Pride and Prejudice",
+        "author": "Jane Austen",
+        "Category": [
+            "Classic",
+            "Romance"
+        ],
+        "ageLimit": 12,
+        "releaseDate": "January 28, 1813",
+        "copies": 8,
+        "addedDate": "April 21, 2025",
+        "issuedQTY": 1,
+        "totalQTY": 9
+    },
+    {
+        "BookID": "B008",
+        "title": "The Fault in Our Stars",
+        "author": "John Green",
+        "Category": [
+            "Romance",
+            "Drama"
+        ],
+        "ageLimit": 13,
+        "releaseDate": "January 10, 2012",
+        "copies": 11,
+        "addedDate": "April 21, 2025",
+        "issuedQTY": 0,
+        "totalQTY": 11
+    },
+    {
+        "BookID": "B009",
+        "title": "Diary of a Wimpy Kid",
+        "author": "Jeff Kinney",
+        "Category": [
+            "Humor",
+            "Children's Literature"
+        ],
+        "ageLimit": 8,
+        "releaseDate": "April 1, 2007",
+        "copies": 14,
+        "addedDate": "April 21, 2025",
+        "issuedQTY": 0,
+        "totalQTY": 14
+    },
+    {
+        "BookID": "B010",
+        "title": "The Catcher in the Rye",
+        "author": "J.D. Salinger",
+        "Category": [
+            "Classic",
+            "Fiction"
+        ],
+        "ageLimit": 14,
+        "releaseDate": "July 16, 1951",
+        "copies": 6,
+        "addedDate": "April 21, 2025",
+        "issuedQTY": 0,
+        "totalQTY": 6
+    },
+    {
+        "BookID": "B011",
+        "title": "Wonder",
+        "author": "R.J. Palacio",
+        "Category": [
+            "Children's Literature",
+            "Drama"
+        ],
+        "ageLimit": 8,
+        "releaseDate": "February 14, 2012",
+        "copies": 10,
+        "addedDate": "April 21, 2025",
+        "issuedQTY": 0,
+        "totalQTY": 10
+    },
+    {
+        "BookID": "B012",
+        "title": "Charlotte's Web",
+        "author": "E.B. White",
+        "Category": [
+            "Children's Literature",
+            "Fiction"
+        ],
+        "ageLimit": 6,
+        "releaseDate": "October 15, 1952",
+        "copies": 7,
+        "addedDate": "April 21, 2025",
+        "issuedQTY": 0,
+        "totalQTY": 7
+    },
+    {
+        "BookID": "B013",
+        "title": "The Alchemist",
+        "author": "Paulo Coelho",
+        "Category": [
+            "Adventure",
+            "Philosophy"
+        ],
+        "ageLimit": 13,
+        "releaseDate": "1988",
+        "copies": 10,
+        "addedDate": "April 21, 2025",
+        "issuedQTY": 0,
+        "totalQTY": 10
+    },
+    {
+        "BookID": "B014",
+        "title": "The Maze Runner",
+        "author": "James Dashner",
+        "Category": [
+            "Science Fiction",
+            "Adventure"
+        ],
+        "ageLimit": 12,
+        "releaseDate": "October 6, 2009",
+        "copies": 9,
+        "addedDate": "April 21, 2025",
+        "issuedQTY": 0,
+        "totalQTY": 9
+    },
+    {
+        "BookID": "B016",
+        "title": "Game Of Thrones",
+        "author": "R.R Martin",
+        "Category": [
+            "Fantasy",
+            "Drama",
+            "Fiction",
+            "Romance"
+        ],
+        "ageLimit": "19",
+        "releaseDate": "June 08, 2023",
+        "copies": 10,
+        "addedDate": "April 27, 2025",
+        "issuedQTY": 0,
+        "totalQTY": 10
+    }
+]

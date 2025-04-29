@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+
+  
+    
+      <h2 class="lib-heading">Book Search</h2>
+  
+        <div class="lib-filters">
+            <input type="text" id="searchInput" placeholder="Search by Book ID or Title..." class="lib-search-input">
+            
+            <select id="authorFilter" class="lib-select">
+                <option value="">All Authors</option>
+                <!-- Add dynamically from Django context -->
+                {% for author in authors %}
+                    <option value="{{ author }}">{{ author }}</option>
+                {% endfor %}
+            </select>
+        
+            <select id="categoryFilter" class="lib-select">
+                <option value="">All Categories</option>
+                <!-- Add dynamically from Django context -->
+                {% for category in categories %}
+                    <option value="{{ category }}">{{ category }}</option>
+                {% endfor %}
+            </select>
+        </div>
+  
+      <table class="lib-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Category</th>
+            <th>Age Limit</th>
+            <th>Release Date</th>
+            <th>Available</th>
+          </tr>
+        </thead>
+        <tbody id="bookResults">
+          <!-- Books will appear here dynamically -->
+        </tbody>
+      </table>
+
+
+  
+{% endblock body %}

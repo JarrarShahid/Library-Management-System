@@ -1,0 +1,199 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Library Management System</title>
+    <style>
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(to right, #34495e, #3498db); /* Linear gradient background */
+}
+
+* {
+    box-sizing: border-box; /* Ensures padding and borders are included in the element's width/height calculation */
+}
+
+.login-container {
+    background: rgba(255, 255, 255, 0.9); /* Light transparent white */
+    padding: 40px 30px;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); /* Softer deeper shadow */
+    width: 100%;
+    max-width: 360px;
+    backdrop-filter: blur(10px); /* Glassmorphism effect */
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    text-align: center;
+    animation: slideUp 0.6s ease-out;
+}
+
+/* Slide-up animation */
+@keyframes slideUp {
+    0% {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.login-container h2 {
+    color: #2c3e50;
+    margin-bottom: 30px;
+    font-size: 26px;
+    font-weight: 700;
+    animation: fadeInText 0.6s ease-out forwards;
+}
+
+/* Fade-in animation for the heading */
+@keyframes fadeInText {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.login-container label {
+    font-weight: 600;
+    font-size: 14px;
+    color: #2c3e50;
+    margin-bottom: 5px;
+    display: block;
+    text-align: left;
+    animation: fadeInText 0.8s ease-out forwards;
+    animation-delay: 0.3s;
+}
+
+.login-container input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 6px;
+    margin-bottom: 20px;
+    border: 1px solid #bbb;
+    border-radius: 8px;
+    font-size: 14px;
+    background: rgba(255, 255, 255, 0.9);
+    transition: 0.3s;
+    animation: fadeInInput 0.8s ease-out forwards;
+    animation-delay: 0.5s;
+}
+
+/* Fade-in animation for input fields */
+@keyframes fadeInInput {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.login-container input:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 6px rgba(52,152,219,0.5);
+}
+
+.login-container button {
+    width: 100%;
+    padding: 12px;
+    background: #2c3e50;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+    animation: fadeInButton 0.8s ease-out forwards;
+    animation-delay: 0.7s;
+}
+
+/* Fade-in animation for button */
+@keyframes fadeInButton {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.login-container button:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+/* Error message */
+.error-message {
+    color: red;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 14px;
+    animation: slideInError 0.5s ease-out;
+}
+
+/* Slide-in animation for error message */
+@keyframes slideInError {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive design for small screens */
+@media (max-width: 480px) {
+    .login-container {
+        padding: 25px 20px;
+    }
+
+    .login-container h2 {
+        font-size: 22px;
+    }
+
+    .login-container input,
+    .login-container button {
+        padding: 10px;
+    }
+}
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        {% if messages %}
+            {% for message in messages %}
+                <p class="error-message">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <h2>Login</h2>
+        <form method="POST" action="{% url 'custom_login' %}">
+            {% csrf_token %}
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Login</button>
+        </form>
+    </div>
+
+</body>
+</html>

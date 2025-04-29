@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block body %}
+<h2 class="lib-heading">Return Book Invoice</h2>
+
+    <label for="issueID">Enter Issue Book ID:</label>
+    <input type="text" id="issueID" placeholder="Enter issue invoice ID e.g. I001">
+    <button class="custom-add-Category-or-find-button" onclick="findIssueInvoice()">Find Invoice</button>
+
+    <form method="post">
+        {% csrf_token %}
+        <div id="invoice-details" style="margin-top: 20px; display: none;">
+            <h3>Invoice Details</h3>
+    
+            <label>Issue Book ID:</label>
+            <input type="text" id="display_issue_id" disabled><br>
+            <input type="hidden" name="issueID" id="hidden_issue_id">
+
+            <label>Member ID:</label>
+            <input type="text" id="display_member_id" disabled><br>
+            <input type="hidden" name="memberID" id="hidden_member_id">
+
+            <label>Book ID:</label>
+            <input type="text" id="display_book_id" disabled><br>
+            <input type="hidden" name="bookID" id="hidden_book_id">
+
+            <label>Expected Return:</label>
+            <input type="text" id="display_expected_return" disabled><br>
+
+            <label>Issued On:</label>
+            <input type="text" id="display_issued_on" disabled><br>
+
+            <label>Status:</label>
+            <input type="text" id="display_status" disabled><br>
+
+            <label>Return Date:</label>
+            <input type="text" id="display_return_date" disabled><br>
+
+            <button type="submit">Return Book</button>
+        </div>
+    </form>
+
+{% endblock body %}

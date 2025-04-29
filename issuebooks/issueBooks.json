@@ -1,0 +1,29 @@
+[
+    {
+        "IssueBookID": "I001",
+        "memberID": "M016",
+        "bookID": "B001",
+        "expectedReturn": "2025-05-08",
+        "issued_on": "2025-04-27",
+        "status": "Received",
+        "return_date": "2025-04-27"
+    },
+    {
+        "IssueBookID": "I002",
+        "memberID": "M002",
+        "bookID": "B004",
+        "expectedReturn": "2025-05-29",
+        "issued_on": "2025-04-27",
+        "status": "Received",
+        "return_date": "2025-04-27"
+    },
+    {
+        "IssueBookID": "I003",
+        "memberID": "M007",
+        "bookID": "B007",
+        "expectedReturn": "2025-05-15",
+        "issued_on": "2025-04-27",
+        "status": "issued",
+        "return_date": null
+    }
+]
