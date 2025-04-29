@@ -312,7 +312,7 @@ res = issue_mgr.issue_a_book(issues, memberID="M001", bookID="B001", expectedRet
 print(res)  # "Book Issued Successfully"
 ```
 
-##🤝 Contributing
+## 🤝 Contributing
 We welcome contributions!
 
 1. Fork the project
